@@ -5,17 +5,12 @@
 	A simple Twitter bot that keeps the memory of my beloved cat alive through daily generated tweets.
 </p>
 <p align="left">
-	<img src="https://img.shields.io/github/license/bufferbloat/Krokmou-bot?style=flat-square&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
-	<img src="https://img.shields.io/github/last-commit/bufferbloat/Krokmou-bot?style=flat-square&logo=git&logoColor=white&color=0080ff" alt="last-commit">
-	<img src="https://img.shields.io/github/languages/top/bufferbloat/Krokmou-bot?style=flat-square&color=0080ff" alt="repo-top-language">
+	<img src="https://img.shields.io/github/stars/bufferbloat/Krokmou-bot?style=flat-square&color=0080ff" alt="stars">
+	<img src="https://img.shields.io/github/last-commit/bufferbloat/Krokmou-bot?style=flat-square&color=0080ff" alt="last-commit">
+	<a href="https://x.com/KrokmouVoid" target="_blank">
+		<img src="https://img.shields.io/badge/follow-@KrokmouVoid-1DA1F2?style=flat-square&logo=x&logoColor=white" alt="twitter">
+	</a>
 </p>
-<p align="left">Built with:</p>
-<p align="left">
-	<img src="https://img.shields.io/badge/Docker-2496ED.svg?style=flat-square&logo=Docker&logoColor=white" alt="Docker">
-	<img src="https://img.shields.io/badge/Python-3776AB.svg?style=flat-square&logo=Python&logoColor=white" alt="Python">
-</p>
-</div>
-<br clear="right">
 
 ## Overview
 
@@ -98,7 +93,7 @@ py test_complete.py
 - [X] Basic tweet generation and posting
 - [X] Time-aware tweet generation
 - [X] Tweet similarity prevention
-- [ ] Seasonal event awareness
+- [X] Seasonal event awareness
 - [ ] Weather-aware tweet generation
 - [ ] Images support
 - [ ] Improve prompt generation
@@ -110,6 +105,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- Created in memory of Krokmou, a beloved cat whose spirit lives on through [this bot](https://x.com/KrokmouVoid).
+- Created in memory of Krokmou, a beloved cat whose spirit lives on through this project
 - Thanks to [Tweepy](https://www.tweepy.org/) for making Twitter API integration seamless and reliable
 - Special thanks to [OpenRouter ](https://openrouter.ai/docs/quickstart)r for providing free API access
