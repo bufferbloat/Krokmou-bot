@@ -1,6 +1,8 @@
-<div align="left" style="position: relative;">
-<img src="https://2264.pw/src/media/krokmouautist.png" align="left" width="10%" style="margin: -20px 0 0 20px;">
+<div align="center">
+<img src="https://2264.pw/src/media/krokmouautist.png" align="center" width="20%" >
 <h1>Krokmou Bot</h1>
+
+<div align="left" style="position: relative;">
 <p align="left">
 	A simple Twitter bot that keeps the memory of my beloved cat alive through daily generated tweets.
 </p>
