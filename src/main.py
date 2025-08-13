@@ -46,11 +46,12 @@ def main():
     logger.info(f"Bot starting in timezone: {timezone}")
     
     try:
-        # Schedule three daily tweets
-        schedule.every().day.at("05:00").do(post_tweet)
-        schedule.every().day.at("14:00").do(post_tweet)
-        schedule.every().day.at("22:00").do(post_tweet)
-        logger.info(f"Bot scheduled to tweet daily at 05:00, 14:00, and 22:00 {timezone}")
+
+        schedule.every().day.at("06:00", timezone).do(post_tweet)  
+        schedule.every().day.at("12:00", timezone).do(post_tweet)
+        schedule.every().day.at("16:00", timezone).do(post_tweet)
+        schedule.every().day.at("22:00", timezone).do(post_tweet)
+        logger.info(f"Bot scheduled to tweet daily at 06:00, 12:00, 16:00, and 22:00 {timezone}")
         
         while True:
             schedule.run_pending()

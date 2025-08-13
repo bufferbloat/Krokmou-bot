@@ -43,7 +43,7 @@ class AIClient:
         
         # Get recent tweet history
         tweet_history = self._load_tweet_history()
-        history_context = "\n".join(tweet_history[-5:])  # Send last 5 tweets as context
+        history_context = "\n".join(tweet_history[-8:])
         
         # Get current time context
         now = datetime.now()
