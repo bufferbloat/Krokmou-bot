@@ -1,5 +1,6 @@
 import os
 import tweepy
+import logging
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -12,6 +13,7 @@ class TwitterClient:
         self.access_token_secret = os.getenv('TWITTER_ACCESS_TOKEN_SECRET')
         self.client = self._setup_client()
         self.user_id = os.getenv('TWITTER_USER_ID')
+        self.logger = logging.getLogger(__name__)
     
     def _setup_client(self):
         client = tweepy.Client(
@@ -37,10 +39,12 @@ class TwitterClient:
     def post_tweet(self, text):
         try:
             response = self.client.create_tweet(text=text)
-            print(f"Successfully posted tweet: {text}")
+            tweet_id = response.data['id']
+            tweet_url = f"https://twitter.com/KrokmouVoid/status/{tweet_id}"
+            print(f"Tweet URL: {tweet_url}")
             # Save to history file
             self._save_tweet_to_history(text)
-            return True
+            return tweet_url
         except Exception as e:
             print(f"Error posting tweet: {e}")
             return False

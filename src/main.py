@@ -7,10 +7,25 @@ from datetime import datetime
 from dotenv import load_dotenv
 from ai_client import AIClient
 from twitter_client import TwitterClient
+KROKMOU_ASCII = """,--. ,--.              ,--.                                    
+ |  .'   /,--.--. ,---. |  |,-. ,--,--,--. ,---. ,--.,--.       
+ |  .   ' |  .--'| .-. ||     / |        || .-. ||  ||  |       
+ |  |\   \|  |   ' '-' '|  \  \ |  |  |  |' '-' ''  ''  '       
+ `--' '--'`--'    `---' `--'`--'`--`--`--' `---'  `----'        
+                 ,-----.           ,--.                         
+                 |  |) /_  ,---. ,-'  '-.                       
+                 |  .-.  \| .-. |'-.  .-'                       
+                 |  '--' /' '-' '  |  |                         
+                 `------'  `---'   `--'                         """
+
 
 load_dotenv()
 
 # Log
+with open('krokmou_bot.log', 'w') as f:
+    f.write('')
+
+logging.Formatter.converter = lambda *args: datetime.now(pytz.timezone('Europe/Paris')).timetuple()
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -41,17 +56,17 @@ def post_tweet():
         logger.error(f"Error in post_tweet: {str(e)}")
 
 def main():
-    # Get configured timezone
+    # Get timezone
     timezone = os.getenv('TIMEZONE', 'Europe/Paris')
     logger.info(f"Bot starting in timezone: {timezone}")
     
     try:
 
-        schedule.every().day.at("06:00", timezone).do(post_tweet)  
+        schedule.every().day.at("06:00", timezone).do(post_tweet)
         schedule.every().day.at("12:00", timezone).do(post_tweet)
         schedule.every().day.at("16:00", timezone).do(post_tweet)
         schedule.every().day.at("22:00", timezone).do(post_tweet)
-        logger.info(f"Bot scheduled to tweet daily at 06:00, 12:00, 16:00, and 22:00 {timezone}")
+        logger.info(f"Bot scheduled to tweet daily at 06:00, 12:00, 16:00, and 22:00")
         
         while True:
             schedule.run_pending()
@@ -61,5 +76,5 @@ def main():
         raise
 
 if __name__ == "__main__":
-    logger.info("=== Krokmou Bot Starting ===")
+    logger.info(f"\n{KROKMOU_ASCII}\n")
     main()

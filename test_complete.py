@@ -24,9 +24,9 @@ def test_complete_workflow():
     
     if response.lower() == 'yes':
         print("\n2. Posting tweet...")
-        success = twitter_client.post_tweet(tweet)
+        result = twitter_client.post_tweet(tweet)
         
-        if success:
+        if result:
             print("✓ Tweet posted successfully!")
         else:
             print("× Failed to post tweet")
