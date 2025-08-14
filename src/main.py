@@ -57,15 +57,20 @@ def post_tweet():
 
 def main():
     # Get timezone
-    timezone = os.getenv('TIMEZONE', 'Europe/Paris')
-    logger.info(f"Bot starting in timezone: {timezone}")
+    timezone_str = os.getenv('TIMEZONE', 'Europe/Paris')
+    tz = pytz.timezone(timezone_str)
+    logger.info(f"Bot starting in timezone: {timezone_str}")
+    
+    # Add current time logging
+    current_time = datetime.now(tz)
+    logger.info(f"Current time in {timezone_str}: {current_time.strftime('%H:%M:%S')}")
     
     try:
-
-        schedule.every().day.at("06:00", timezone).do(post_tweet)
-        schedule.every().day.at("12:00", timezone).do(post_tweet)
-        schedule.every().day.at("16:00", timezone).do(post_tweet)
-        schedule.every().day.at("22:00", timezone).do(post_tweet)
+        # Use string timezone instead of timezone object
+        schedule.every().day.at("06:00").do(post_tweet)
+        schedule.every().day.at("12:00").do(post_tweet)
+        schedule.every().day.at("16:00").do(post_tweet)
+        schedule.every().day.at("22:00").do(post_tweet)
         logger.info(f"Bot scheduled to tweet daily at 06:00, 12:00, 16:00, and 22:00")
         
         while True:
