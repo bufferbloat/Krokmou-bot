@@ -7,11 +7,13 @@
 	A simple Twitter bot that keeps the memory of my beloved cat alive through daily generated tweets.
 </p>
 <p align="left">
-	<img src="https://img.shields.io/github/stars/bufferbloat/Krokmou-bot?style=flat-square&color=0080ff" alt="stars">
 	<img src="https://img.shields.io/github/last-commit/bufferbloat/Krokmou-bot?style=flat-square&color=0080ff" alt="last-commit">
+	<img src="https://img.shields.io/github/commit-activity/t/bufferbloat/Krokmou-bot?style=flat-square&color=0080ff" alt="commit-activity">
+	<img src="https://img.shields.io/github/languages/top/bufferbloat/Krokmou-bot?style=flat-square&color=0080ff" alt="top-language">
 	<a href="https://x.com/KrokmouVoid" target="_blank">
 		<img src="https://img.shields.io/badge/follow-@KrokmouVoid-1DA1F2?style=flat-square&logo=x&logoColor=white" alt="twitter">
 	</a>
+
 </p>
 
 ## Overview
@@ -90,15 +92,29 @@ py test_ai.py
 py test_complete.py
 ```
 
+Check the bot logs to verify it’s running correctly:
+```sh
+cat krokmou_bot.log
+```
+Or follow the logs in real-time:
+```sh
+tail -f krokmou_bot.log
+```
+
 ## Project Roadmap
 
 - [X] Basic tweet generation and posting
 - [X] Time-aware tweet generation
 - [X] Tweet similarity prevention
 - [X] Seasonal event awareness
+- [X] Improve prompt generation [¹](https://github.com/bufferbloat/Krokmou-bot/commit/b2bd5d03a38852cc7dfea763c7c2c5bf5b8edf41)
 - [ ] Weather-aware tweet generation
+- [ ] Real-world events awareness
 - [ ] Images support
-- [ ] Improve prompt generation
+- [ ] Discord integration bridge
+- [ ] Interactive reply system
+- [ ] Codebase cleanup (lol)
+
 
 
 ## License
@@ -109,4 +125,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Created in memory of Krokmou, a beloved cat whose spirit lives on through this project
 - Thanks to [Tweepy](https://www.tweepy.org/) for making Twitter API integration seamless and reliable
-- Special thanks to [OpenRouter ](https://openrouter.ai/docs/quickstart)r for providing free API access
+- Special thanks to [OpenRouter](https://openrouter.ai/docs/quickstart) for providing free API access
+
+##
+<div align="center">
+Made with ❤️ for Krokmou
