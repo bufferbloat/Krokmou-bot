@@ -129,18 +129,39 @@ class AIClient:
                 }
             ]
         }
-        
+        # Advanced errors logging
         for attempt in range(max_attempts):
             try:
+                print(f"Attempt {attempt + 1}: Sending request to OpenRouter...")
                 response = requests.post(self.api_url, headers=headers, json=data)
+                
+                # Response details
+                print(f"Response status code: {response.status_code}")
+                print(f"Response headers: {dict(response.headers)}")
+                
                 response.raise_for_status()
-                tweet = response.json()['choices'][0]['message']['content'].strip()
+                response_json = response.json()
+                
+                # Full response for debugging
+                print(f"Full API response: {response_json}")
+                
+                tweet = response_json['choices'][0]['message']['content'].strip()
                 tweet = tweet.strip('"')
+                
+                print(f"Generated tweet: {tweet}")
                 
                 if len(tweet) <= 200 and not self._is_similar_to_history(tweet):
                     return tweet
-                print(f"Attempt {attempt + 1}: Tweet too long or too similar, retrying...")
+                print(f"Attempt {attempt + 1}: Tweet too long ({len(tweet)} chars) or too similar, retrying...")
+            except requests.exceptions.RequestException as e:
+                print(f"Network error (attempt {attempt + 1}): {e}")
+                if hasattr(e, 'response') and e.response is not None:
+                    print(f"Error response: {e.response.text}")
+            except KeyError as e:
+                print(f"API response format error (attempt {attempt + 1}): {e}")
+                print(f"Response content: {response.text if 'response' in locals() else 'No response'}")
             except Exception as e:
-                print(f"Error generating tweet (attempt {attempt + 1}): {e}")
+                print(f"Unexpected error (attempt {attempt + 1}): {e}")
+                print(f"Error type: {type(e).__name__}")
         
         return None
