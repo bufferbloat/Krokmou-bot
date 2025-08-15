@@ -123,12 +123,14 @@ class AIClient:
                               f"Use context to inspire activity, mood, or surroundings.\n\n"
                               f"Tweet rules:\n"
                               f"- ABSOLUTE MAXIMUM: 200 characters including spaces.\n"
+                              f"- Your response must be EXACTLY 50 to 200 max characters. Count each character carefully before responding.\n"
+                              f"- DO NOT include the character count in your response - only return the tweet text itself.\n"
                               f"- No emojis, hashtags, quotes or em-dashes. Ever.\n\n"
                               f"Previous tweets for context (avoid repetition in theme and structure):\n{history_context}"
                 },
                 {
                     "role": "user",
-                    "content": "Write a short, funny, wholesome tweet about what you're doing right now. Make it different from your previous tweets. CRITICAL CONSTRAINT: Your response must be EXACTLY 50 to 200 max characters. Count each character carefully before responding. If your first attempt is over 200 characters, immediately provide a shorter version."
+                    "content": "Write a short, funny, wholesome tweet about what you're doing right now. Make it different from your previous tweets."
                 }
             ]
         }
@@ -149,6 +151,11 @@ class AIClient:
                 self.logger.debug(f"Full API response: {response_json}")
                 
                 tweet = response_json['choices'][0]['message']['content'].strip()
+                tweet = tweet.strip('"')
+                
+                # Regex prompt fix FUCK DEEPSEEK
+                import re
+                tweet = re.sub(r'"?\s*\(\d+\s+characters?\)"?$', '', tweet).strip()
                 tweet = tweet.strip('"')
                 
                 self.logger.info(f"Generated tweet (length {len(tweet)}): {tweet}")
