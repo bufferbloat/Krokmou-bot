@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from difflib import SequenceMatcher
 from datetime import datetime
 import random
+import logging
 
 load_dotenv()
 
@@ -11,6 +12,7 @@ class AIClient:
     def __init__(self):
         self.api_key = os.getenv('OPENROUTER_API_KEY')
         self.api_url = "https://openrouter.ai/api/v1/chat/completions"
+        self.logger = logging.getLogger(__name__)
     
     def _load_tweet_history(self):
 
@@ -25,7 +27,7 @@ class AIClient:
         
         return tweets
     
-    def _is_similar_to_history(self, new_tweet, similarity_threshold=0.6):
+    def _is_similar_to_history(self, new_tweet, similarity_threshold=0.5):
         history = self._load_tweet_history()
         
         for old_tweet in history:
@@ -35,7 +37,7 @@ class AIClient:
                 return True
         return False
     
-    def generate_tweet(self, max_attempts=3):
+    def generate_tweet(self, max_attempts=5):
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json"
@@ -84,6 +86,7 @@ class AIClient:
         # Prompt
         data = {
             "model": "deepseek/deepseek-r1:free",
+            "temperature": 0.7,
             "messages": [
                 {
                     "role": "system",
@@ -97,13 +100,13 @@ class AIClient:
                               f"- First-person voice as Krokmou.\n"
                               f"- Playful, curious, mischievous, yet wholesome.\n"
                               f"- Mix light sarcasm or 'cat logic' with warmth.\n"
+                              f"- CRITICAL: Keep tweets between 50 min to 200 max characters. This is MANDATORY.\n"
                               f"- Sometimes (5% chance) refer to yourself as the 'Void Ninja'.\n"
                               f"- Avoid generic cat jokes.\n"
                               f"- Aim for a balance between wit and readability: rich in personality but instantly clear.\n"
                               f"- Use mostly simple, everyday words, but allow up to two clever or unusual words per tweet.\n"
                               f"- Limit to one or two playful metaphors or vivid images per tweet.\n"
                               f"- Structure: often open with a short, punchy hook, followed by one or two longer descriptive sentences.\n"
-                              f"- Vary length between 50 to 200 characters.\n"
                               f"- Rarely (5% chance), write in a nostalgic tone, as if remembering a past adventure or nap spot from afar. Keep it uplifting and warm, not sad.\n"
                               f"- Occasionally include one subtle sensory detail per tweet (scent, sound, texture, warmth, light).\n"
                               f"- Occasionally (10% chance) include a short, whimsical 'cat wisdom' style thought.\n"
@@ -119,49 +122,57 @@ class AIClient:
                               f"{special_day}\n"
                               f"Use context to inspire activity, mood, or surroundings.\n\n"
                               f"Tweet rules:\n"
-                              f"- Max 200 characters including spaces.\n"
+                              f"- ABSOLUTE MAXIMUM: 200 characters including spaces.\n"
                               f"- No emojis, hashtags, quotes or em-dashes. Ever.\n\n"
                               f"Previous tweets for context (avoid repetition in theme and structure):\n{history_context}"
                 },
                 {
                     "role": "user",
-                    "content": "Write a short, funny, wholesome tweet about what you're doing right now. Make it different from your previous tweets."
+                    "content": "Write a short, funny, wholesome tweet about what you're doing right now. Make it different from your previous tweets. CRITICAL CONSTRAINT: Your response must be EXACTLY 50 to 200 max characters. Count each character carefully before responding. If your first attempt is over 200 characters, immediately provide a shorter version."
                 }
             ]
         }
         # Advanced errors logging
         for attempt in range(max_attempts):
             try:
-                print(f"Attempt {attempt + 1}: Sending request to OpenRouter...")
+                self.logger.info(f"Attempt {attempt + 1}: Sending request to OpenRouter...")
                 response = requests.post(self.api_url, headers=headers, json=data)
                 
                 # Response details
-                print(f"Response status code: {response.status_code}")
-                print(f"Response headers: {dict(response.headers)}")
+                self.logger.info(f"Response status code: {response.status_code}")
+                self.logger.debug(f"Response headers: {dict(response.headers)}")
                 
                 response.raise_for_status()
                 response_json = response.json()
                 
-                # Full response for debugging
-                print(f"Full API response: {response_json}")
+                # Full response
+                self.logger.debug(f"Full API response: {response_json}")
                 
                 tweet = response_json['choices'][0]['message']['content'].strip()
                 tweet = tweet.strip('"')
                 
-                print(f"Generated tweet: {tweet}")
+                self.logger.info(f"Generated tweet (length {len(tweet)}): {tweet}")
                 
-                if len(tweet) <= 200 and not self._is_similar_to_history(tweet):
-                    return tweet
-                print(f"Attempt {attempt + 1}: Tweet too long ({len(tweet)} chars) or too similar, retrying...")
+                # Check length
+                if len(tweet) > 200:
+                    self.logger.warning(f"Attempt {attempt + 1}: Tweet too long ({len(tweet)} chars), retrying...")
+                    continue
+                    
+                # Check similarity
+                if self._is_similar_to_history(tweet):
+                    self.logger.warning(f"Attempt {attempt + 1}: Tweet too similar to history, retrying...")
+                    continue
+                    
+                return tweet
             except requests.exceptions.RequestException as e:
-                print(f"Network error (attempt {attempt + 1}): {e}")
+                self.logger.error(f"Network error (attempt {attempt + 1}): {e}")
                 if hasattr(e, 'response') and e.response is not None:
-                    print(f"Error response: {e.response.text}")
+                    self.logger.error(f"Error response: {e.response.text}")
             except KeyError as e:
-                print(f"API response format error (attempt {attempt + 1}): {e}")
-                print(f"Response content: {response.text if 'response' in locals() else 'No response'}")
+                self.logger.error(f"API response format error (attempt {attempt + 1}): {e}")
+                self.logger.error(f"Response content: {response.text if 'response' in locals() else 'No response'}")
             except Exception as e:
-                print(f"Unexpected error (attempt {attempt + 1}): {e}")
-                print(f"Error type: {type(e).__name__}")
+                self.logger.error(f"Unexpected error (attempt {attempt + 1}): {e}")
+                self.logger.error(f"Error type: {type(e).__name__}")
         
         return None

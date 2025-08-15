@@ -37,8 +37,10 @@ ENV/
 # Logs
 *.log
 tweet_history.txt
+test_debug.log
 
 # Docker
 .docker/
 
+# Others
 README.md
