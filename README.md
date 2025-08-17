@@ -107,7 +107,7 @@ tail -f krokmou_bot.log
 - [X] Time-aware tweet generation
 - [X] Tweet similarity prevention
 - [X] Seasonal event awareness
-- [X] Improve prompt generation [¹](https://github.com/bufferbloat/Krokmou-bot/commit/b2bd5d03a38852cc7dfea763c7c2c5bf5b8edf41) [²](https://github.com/bufferbloat/Krokmou-bot/commit/551b9984786d457ff2fe970931404b7c5774f623#diff-802a5f77f165df16a184bcb5aed013e7f9d4a586f72c1b8e54815e960ea1f15e)
+- [X] Improve prompt generation [¹](https://github.com/bufferbloat/Krokmou-bot/commit/b2bd5d03a38852cc7dfea763c7c2c5bf5b8edf41) [²](https://github.com/bufferbloat/Krokmou-bot/commit/551b9984786d457ff2fe970931404b7c5774f623#diff-802a5f77f165df16a184bcb5aed013e7f9d4a586f72c1b8e54815e960ea1f15e) [³](https://github.com/bufferbloat/Krokmou-bot/commit/92350859da19b027b8ff76dbbb8393b358f6af91)
 - [ ] Weather-aware tweet generation
 - [ ] Real-world events awareness
 - [ ] Images support
