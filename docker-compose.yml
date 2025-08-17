@@ -1,12 +1,14 @@
 services:
-  bot:
+  krokmou-bot:
+    container_name: krokmou-bot
     environment:
       - TZ=Europe/Paris
     volumes:
+      - .:/app
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
+      - ./tweet_history.txt:/app/tweet_history.txt
+      - ./krokmou_bot.log:/app/krokmou_bot.log
     build: .
     env_file: .env
-    restart: always
-    volumes:
-      - .:/app
+    restart: unless-stopped
