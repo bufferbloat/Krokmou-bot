@@ -75,7 +75,7 @@ def main():
         
         while True:
             schedule.run_pending()
-            time.sleep(45)
+            time.sleep(20)
     except Exception as e:
         logger.error(f"Error in main loop: {str(e)}")
         raise
