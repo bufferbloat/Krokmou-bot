@@ -27,7 +27,7 @@ class AIClient:
         
         return tweets
     
-    def _is_similar_to_history(self, new_tweet, similarity_threshold=0.5):
+    def _is_similar_to_history(self, new_tweet, similarity_threshold=0.6):
         history = self._load_tweet_history()
         
         for old_tweet in history:
@@ -45,12 +45,12 @@ class AIClient:
         
         # Get recent tweet history
         tweet_history = self._load_tweet_history()
-        history_context = "\n".join(tweet_history[-8:])
+        history_context = "\n".join(tweet_history[-9:])
         
         # Get current time context
         now = datetime.now()
         time_context = ""
-        if random.random() < 0.3:  # 30% gamba
+        if random.random() < 0.2:  # 20% gamba
             current_hour = now.hour
             time_period = (
                 "early morning" if 5 <= current_hour < 9
@@ -63,7 +63,7 @@ class AIClient:
         
         # Get season
         season_context = ""
-        if random.random() < 0.2:  # 20% gamba
+        if random.random() < 0.1:  # 10% gamba
             month = now.month
             season = (
                 "winter" if month in [12, 1, 2]
@@ -95,7 +95,7 @@ class AIClient:
                               f"- Born on 25/07/2023\n"
                               f"- Loves outdoor adventures and indoor naps, cuddles, and treats.\n"
                               f"- Owner is @bufferbloat (mention rarely, ~5%, mainly in cozy or affectionate nap contexts).\n"
-                              f"- Has a big brother dog named Yoda (mention sometimes, ~15%, mainly when food, smells, or noise are involved).\n\n"
+                              f"- Has a big brother dog named Yoda (mention rarely, ~10%, mainly when food, smells, or noise are involved).\n\n"
                               f"Tweet style:\n"
                               f"- First-person voice as Krokmou.\n"
                               f"- Playful, curious, mischievous, yet wholesome.\n"
@@ -114,8 +114,7 @@ class AIClient:
                               f"- Occasionally (~10%, in mischievous or dramatic tweets) use micro-pauses (...) for effect, but never more than once per tweet. Do not use em dashes.\n"
                               f"- Let the current season, time of day, or nearby events subtly color Krokmou's mood or actions without stating them directly unless it feels natural.\n"
                               f"- Avoid repeating the same opening word across consecutive tweets. Do not overuse 'I' or 'Just'.\n"
-                              f"- Use varied opening structures: questions, sounds, observations, dramatic statements.\n"
-                              f"- Avoid repeating sentence starts, actions, or settings from recent tweets. Ensure tone alternates between playful, thoughtful, and mischievous across tweets over time.\n\n"
+                              f"- Use varied opening structures: questions, sounds, observations, dramatic statements.\n\n"
                               f"Current context:\n"
                               f"{time_context}"
                               f"{season_context}"
@@ -124,8 +123,12 @@ class AIClient:
                               f"Tweet rules:\n"
                               f"- Your response must be EXACTLY 50 to 200 max characters. Count each character carefully before responding.\n"
                               f"- DO NOT include the character count in your response - only return the tweet text itself.\n"
-                              f"- No emojis, hashtags, quotes, or em-dashes (—).\n\n"
-                              f"Previous tweets for context (avoid repetition in theme and structure):\n{history_context}"
+                              f"- No emojis, hashtags, quotes, or em-dashes (—).\n"
+                              f"- AVOID mentioning Yoda or the owner in consecutive tweets follow the percentage guidance for both. Vary your focus between solo adventures, observations, and interactions.\n\n"
+                              f"- Previous tweets for context (avoid repetition in theme and structure):\n{history_context}"
+                              f"- Avoid repeating the same action/verb from recent tweets\n"
+                              f"- Avoid mentioning the same objects/locations consecutively\n"
+
                 },
                 {
                     "role": "user",
