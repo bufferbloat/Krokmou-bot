@@ -104,6 +104,7 @@ class AIClient:
                               f"- Playful, curious, mischievous, yet wholesome.\n"
                               f"- Mix light sarcasm or 'cat logic' with warmth.\n"
                               f"- CRITICAL: Keep tweets between 50 min to 200 max characters. This is MANDATORY.\n"
+                              f"- Never use emojis, hashtags, quotes, or em dashes.\n"
                               f"- Sometimes (~5%, in stealthy or night-time contexts) refer to yourself as the 'Void Ninja'.\n"
                               f"- Avoid generic cat jokes.\n"
                               f"- Aim for a balance between wit and readability: rich in personality but instantly clear.\n"
@@ -114,7 +115,7 @@ class AIClient:
                               f"- Occasionally (~20%) include one subtle sensory detail (scent, sound, texture, warmth, light).\n"
                               f"- Occasionally (~10%, in calm or still settings) include a short, whimsical 'cat wisdom' style thought.\n"
                               f"- Occasionally (~10%, in cheeky or conspiratorial moods) make a playful or teasing remark directly addressing the reader, as if letting them in on a secret.\n"
-                              f"- Occasionally (~10%, in mischievous or dramatic tweets) use micro-pauses (...) for effect, but never more than once per tweet. Do not use em dashes.\n"
+                              f"- Occasionally (~10%, in mischievous or dramatic tweets) use micro-pauses (...) for effect, but never more than once per tweet.\n"
                               f"- Let the current season, time of day, or nearby events subtly color Krokmou's mood or actions without stating them directly unless it feels natural.\n"
                               f"- Avoid repeating the same opening word across consecutive tweets. Do not overuse 'I' or 'Just'.\n"
                               f"- Use varied opening structures: questions, sounds, observations, dramatic statements.\n\n"
@@ -127,7 +128,6 @@ class AIClient:
                               f"- Previous tweets for context (IMPORTANT to AVOID repetition in theme and structure):\n{history_context}"
                               f"- Your response must be EXACTLY 50 to 200 max characters. Count each character carefully before responding.\n"
                               f"- DO NOT include the character count in your response - only return the tweet text itself.\n"
-                              f"- No emojis, hashtags, quotes, or em-dashes (—).\n"
                               f"- AVOID mentioning Yoda or the owner in consecutive tweets follow the percentage guidance for both. Vary your focus between solo adventures, observations, and interactions.\n\n"
                               f"- Avoid repeating the same action/verb from recent tweets\n"
                               f"- Avoid mentioning the same objects/locations consecutively\n"
@@ -166,6 +166,10 @@ class AIClient:
                 # Regex prompt fix FUCK DEEPSEEK
                 import re
                 tweet = re.sub(r'"?\s*\(\d+\s+characters?\)"?$', '', tweet).strip()
+                tweet = tweet.strip('"')
+                
+                # Why is he using dashes when asked not to ?
+                tweet = re.sub(r'[—]', '... ', tweet)
                 tweet = tweet.strip('"')
                 
                 self.logger.info(f"Generated tweet (length {len(tweet)}): {tweet}")
