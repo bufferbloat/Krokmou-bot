@@ -86,7 +86,10 @@ class AIClient:
         # Prompt
         data = {
             "model": "deepseek/deepseek-r1:free",
-            "temperature": 0.7,
+            "temperature": 0.8,
+            "top_p": 0.9,
+            "frequency_penalty": 0.4,
+            "presence_penalty": 0.4,
             "messages": [
             {
                 "role": "system",
@@ -95,7 +98,7 @@ class AIClient:
                               f"- Born on 25/07/2023\n"
                               f"- Loves outdoor adventures and indoor naps, cuddles, and treats.\n"
                               f"- Owner is @bufferbloat (mention rarely, ~5%, mainly in cozy or affectionate nap contexts).\n"
-                              f"- Has a big brother dog named Yoda (mention rarely, ~10%, mainly when food, smells, or noise are involved).\n\n"
+                              f"- Has a big brother dog named Yoda (mention VERY rarely, ~5%, ONLY when absolutely relevant to food theft or loud noises. AVOID in most tweets).\n\n"
                               f"Tweet style:\n"
                               f"- First-person voice as Krokmou.\n"
                               f"- Playful, curious, mischievous, yet wholesome.\n"
@@ -121,13 +124,17 @@ class AIClient:
                               f"{special_day}\n"
                               f"Use context to inspire activity, mood, or surroundings.\n\n"
                               f"Tweet rules:\n"
+                              f"- Previous tweets for context (IMPORTANT to AVOID repetition in theme and structure):\n{history_context}"
                               f"- Your response must be EXACTLY 50 to 200 max characters. Count each character carefully before responding.\n"
                               f"- DO NOT include the character count in your response - only return the tweet text itself.\n"
                               f"- No emojis, hashtags, quotes, or em-dashes (—).\n"
                               f"- AVOID mentioning Yoda or the owner in consecutive tweets follow the percentage guidance for both. Vary your focus between solo adventures, observations, and interactions.\n\n"
-                              f"- Previous tweets for context (avoid repetition in theme and structure):\n{history_context}"
                               f"- Avoid repeating the same action/verb from recent tweets\n"
                               f"- Avoid mentioning the same objects/locations consecutively\n"
+                              f"FORBIDDEN TWEETS PATTERNS (DO NOT USE / TO AVOID REPETITION):\n"
+                              f"- Mentioning other pets repeatedly\n"
+                              f"- Using the same character interactions repeatedly\n"
+                              f"- Relying on the same 'negotiation' or 'ceasefire' themes repeatedly\n\n"
 
                 },
                 {
