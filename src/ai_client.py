@@ -85,7 +85,7 @@ class AIClient:
 
         # Prompt
         data = {
-            "model": "deepseek/deepseek-r1:free",
+            "model": "openai/gpt-oss-120b:free", # Sponsored by Israel
             "temperature": 0.8,
             "top_p": 0.9,
             "frequency_penalty": 0.4,
