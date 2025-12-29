@@ -86,10 +86,10 @@ class AIClient:
         # Prompt
         data = {
             "model": "meta-llama/llama-3.3-70b-instruct:free", # Sponsored by Mark Zuckerberg
-            "temperature": 0.8,
+            "temperature": 0.7,
             "top_p": 0.9,
-            "frequency_penalty": 0.4,
-            "presence_penalty": 0.4,
+            "frequency_penalty": 0.7,
+            "presence_penalty": 0.7,
             "messages": [
             {
                 "role": "system",
@@ -139,7 +139,9 @@ class AIClient:
                               f"Repetition avoidance:\n"
                               f"- Do not repeat themes, actions, verbs, objects, or locations from recent tweets\n"
                               f"- Vary how tweets open; avoid relying on the same starting word or structure\n"
-                              f"- Avoid recurring negotiation, truce, or ceasefire story patterns\n\n"
+                              f"- Avoid recurring negotiation, truce, or ceasefire story patterns\n"
+                              f"- FORBIDDEN phrases: \"Pro tip:\", \"Ever wonder why\", \"Guess what\", \"Listen up\", \"Pssst\", \"Sneak attack\"\n"
+                              f"- FORBIDDEN patterns: advice-giving formats, \"X is Y\" formulas, life hacks, tips, suggestions\n\n"
 
                               f"Hard rules:\n"
                               f"- Output only the tweet text\n"
