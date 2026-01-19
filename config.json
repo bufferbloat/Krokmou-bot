@@ -1,0 +1,69 @@
+{
+  "news_awareness": {
+    "enabled": true,
+    "probability": 0.15,
+    "cooldown_hours": 24,
+    "max_per_week": 2,
+    "min_score": 25,
+    "countries": ["us", "fr"],
+    "categories": ["general"],
+    "keywords": {
+      "war": {
+        "aliases": ["war", "warfare", "conflict", "invasion", "military"],
+        "points": 25
+      },
+      "nuclear": {
+        "aliases": ["nuclear", "nuke", "nukes", "atomic"],
+        "points": 25
+      },
+      "trump": {
+        "aliases": ["trump", "trump's", "donald trump", "president trump"],
+        "points": 25
+      },
+      "macron": {
+        "aliases": ["macron", "macron's", "emmanuel macron", "president macron"],
+        "points": 25
+      },
+      "putin": {
+        "aliases": ["putin", "putin's", "vladimir putin"],
+        "points": 15
+      },
+      "musk": {
+        "aliases": ["musk", "musk's", "elon musk", "elon"],
+        "points": 10
+      },
+      "ukraine": {
+        "aliases": ["ukraine", "ukrainian", "ukrainians", "kyiv", "kiev", "zelensky"],
+        "points": 15
+      },
+      "election": {
+        "aliases": ["election", "elections", "vote", "voting", "ballot", "electoral"],
+        "points": 10
+      },
+      "ai": {
+        "aliases": ["ai", "a.i.", "artificial intelligence", "chatgpt", "openai", "gpt", "machine learning"],
+        "points": 15
+      },
+      "nvidia": {
+        "aliases": ["nvidia", "nvidia's", "geforce", "rtx", "gpu"],
+        "points": 15
+      },
+      "usa": {
+        "aliases": ["usa", "us", "u.s.", "united states", "america", "american", "americans"],
+        "points": 20
+      },
+      "russia": {
+        "aliases": ["russia", "russian", "russians", "moscow", "kremlin"],
+        "points": 15
+      },
+      "china": {
+        "aliases": ["china", "chinese", "beijing"],
+        "points": 15
+      },
+      "france": {
+        "aliases": ["france", "french", "paris"],
+        "points": 30
+      }
+    }
+  }
+}
