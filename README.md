@@ -28,27 +28,12 @@ I started this project earlier this year as a fun experiment and never really fi
 ## Features
 
 - **Smart Tweet Generation**: Uses [OpenRouter API](https://openrouter.ai/docs/quickstart) to create personality-consistent tweets
+- **Scheduled Posting**: Tweets a few times per day using [Tweepy](https://github.com/tweepy/tweepy/) library
 - **Time-Aware Content**: Generates contextual tweets based on time of day and seasons
-- **Scheduled Posting**: Tweets three times per day using [Tweepy](https://github.com/tweepy/tweepy/) library
-- **Content Diversity**: Implements smart similarity checking to prevent repetitive tweets
-- **Tweet History**: Maintains a local history to ensure unique and varied content
-- **Docker Support**: Easy deployment and management through containerization
-
-## Project Structure
-
-```sh
-└── Krokmou-bot/
-    ├── Dockerfile
-    ├── docker-compose.yml
-    ├── requirements.txt
-    ├── src/
-    │   ├── __init__.py
-    │   ├── ai_client.py
-    │   ├── main.py
-    │   └── twitter_client.py
-    ├── test_ai.py
-    └── test_complete.py
-```
+- **News Awareness**: Can react to breaking news worldwide using [NewsAPI](newsapi.org)
+- **Content Diversity**: Implements similarity checking to prevent repetitive tweets
+- **Tweet History**: Maintains a local history to try to ensure unique and varied content
+- **Docker Support**: Easier deployment and management through containerization
 
 ## Getting Started
 
@@ -58,7 +43,8 @@ I started this project earlier this year as a fun experiment and never really fi
 - Docker / Docker Compose
 - Twitter Bot API credentials
 - OpenRouter API key
-
+- NewsAPI key
+  
 ### Installation
 
 1. Clone the repository:
@@ -74,6 +60,9 @@ TWITTER_API_SECRET=your_api_secret
 TWITTER_ACCESS_TOKEN=your_access_token
 TWITTER_ACCESS_TOKEN_SECRET=your_access_token_secret
 OPENROUTER_API_KEY=your_openrouter_api_key
+NEWSAPI_KEY=your_key_meow
+
+TIMEZONE=Europe/Paris
 ```
 
 3. Build and run with Docker:
@@ -97,9 +86,9 @@ Check the bot logs to verify it’s running correctly:
 ```sh
 cat krokmou_bot.log
 ```
-Or follow the logs in real-time:
+Or follow the logs in real-time using docker:
 ```sh
-tail -f krokmou_bot.log
+docker logs krokmou-bot -f
 ```
 
 ## Project Roadmap
