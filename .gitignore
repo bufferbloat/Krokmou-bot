@@ -36,6 +36,7 @@ ENV/
 
 # Logs
 *.log
+news_history.json
 tweet_history.txt
 test_debug.log
 
