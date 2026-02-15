@@ -102,9 +102,9 @@ class AIClient:
         
         return ""
     
-    def _get_user_prompt(self):
-        """Get a random user prompt for variety"""
-        prompts = [
+    def _get_user_prompts(self):
+        """Get all user prompts for variety"""
+        return [
             "Write a short, funny, wholesome tweet about what you're doing right now. Focus on a small, specific sensory detail.",
             "Write a short, funny, wholesome tweet about what you're doing right now, but avoid obvious cat activities.",
             "Write a short, funny, wholesome tweet about what you're doing right now. Include a tiny problem or dilemma.",
@@ -113,7 +113,10 @@ class AIClient:
             "Write a short, funny, wholesome tweet about what you're doing right now. Include one tiny, whimsical thought or piece of cat wisdom.",
             "Write a short, funny, wholesome tweet about what you're doing right now. Add a nostalgic or reflective note only if it feels warm and positive."
         ]
-        return random.choice(prompts)
+
+    def _get_user_prompt(self):
+        """Get a random user prompt for variety"""
+        return random.choice(self._get_user_prompts())
     
     # =========================================================================
     # TWEET GENERATION
@@ -220,33 +223,37 @@ Recent tweets for reference. Avoid repeating their themes, structure, or imagery
         time_context = self._get_time_context()
         season_context = self._get_season_context()
         special_day = self._get_special_day()
-        
-        # Build request
-        data = {
-            "model": "meta-llama/llama-3.3-70b-instruct:free",
-            "temperature": 0.7,
-            "top_p": 0.9,
-            "frequency_penalty": 0.7,
-            "presence_penalty": 0.7,
-            "messages": [
-                {
-                    "role": "system",
-                    "content": self._build_system_prompt(
-                        history_context, 
-                        time_context, 
-                        season_context, 
-                        special_day
-                    )
-                },
-                {
-                    "role": "user",
-                    "content": self._get_user_prompt()
-                }
-            ]
-        }
-        
-        # Attempt generation
+
+        user_prompts = self._get_user_prompts()
+
+        system_prompt = self._build_system_prompt(
+            history_context,
+            time_context,
+            season_context,
+            special_day
+        )
+
         for attempt in range(max_attempts):
+            user_prompt = user_prompts[attempt % len(user_prompts)]
+
+            data = {
+                "model": "meta-llama/llama-3.3-70b-instruct:free",
+                "temperature": 0.8,
+                "top_p": 0.9,
+                "frequency_penalty": 0.6 + (attempt * 0.1),
+                "presence_penalty": 0.5 + (attempt * 0.1),
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": system_prompt
+                    },
+                    {
+                        "role": "user",
+                        "content": user_prompt
+                    }
+                ]
+            }
+
             try:
                 self.logger.info(f"Attempt {attempt + 1}/{max_attempts}: Sending request to OpenRouter...")
                 response = requests.post(self.api_url, headers=headers, json=data, timeout=30)
