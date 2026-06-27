@@ -1,5 +1,11 @@
+> [!WARNING]
+> This project has been archived because [X effectively removed the free tier](https://devcommunity.x.com/t/no-free-plan/257026) for its API.
+> 
+> This makes running a small personal Twitter bot like this no longer practical without paying and this sucks.
+
+
 <div align="center">
-<img src="https://2264.pw/src/media/krokmouautist.png" align="center" width="20%" >
+
 <h1>Krokmou Bot</h1>
 
 <div align="left" style="position: relative;">
